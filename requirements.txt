@@ -20,12 +20,8 @@ Pillow==4.0.0
 Pygments==2.1.3
 pytz==2016.3
 reportlab==3.3.0
-## FIXME: could not find svn URL in dependency_links for this package:
-rst2pdf===0.93.dev-r0
 selenium==3.0.2
 six==1.10.0
 snowballstemmer==1.2.1
-Sphinx==1.4
-sphinxjp.themes.basicstrap==0.4.3
 vboxapi==1.0
 Werkzeug==0.11.15
