@@ -59,6 +59,11 @@ def bottomScroll(driver, scrollpage):
 				plays = sound.find("li", class_="sc-ministats-item").get("title")
 				#print(str(plays))
 				sound_in["plays"] = plays
+
+				# サウンドのイメージ
+				imagetag = sound.find("span",class_="image__full").get("style")
+				image = imagetag[imagetag.find("url(")+4:imagetag.find(");")]
+				sound_in["image"] = image
                 
 				data_list.append(sound_in) # data_listに1ページ分の内容をまとめる
 
