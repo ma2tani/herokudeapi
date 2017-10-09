@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys # 文字を入力する時に使う
 from time import sleep
+import json
+from datetime import datetime
 
 def bottomScroll(driver, scrollpage):
 	data_list = [] # 全ページのデータを集める配列
@@ -13,6 +15,7 @@ def bottomScroll(driver, scrollpage):
 		if 0 == scrollpage:
 			lenOfPage = driver.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
 			match=False
+			print(u"start execute / "+datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 			while(match==False):
 				lastCount = lenOfPage
 				sleep(3)
@@ -20,10 +23,13 @@ def bottomScroll(driver, scrollpage):
 				if lastCount==lenOfPage:
 					match=True
             
+			print(u"end execute / "+datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 			data = driver.page_source.encode('utf-8')
 			soup = BeautifulSoup(data,"lxml") # 加工しやすいようにlxml形式にする
 			sound_list = soup.find_all("li",class_="soundList__item") # サウンド単位で抽出
 			print(str(len(sound_list)) + u"件")
+			print(u"start parse / "+datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
+			# f = open('./output.json', 'w')
 			for sound in sound_list:
 				sound_in = {} # サウンドの情報を辞書形式でまとめる
                 
@@ -56,16 +62,21 @@ def bottomScroll(driver, scrollpage):
 				sound_in["postedTime"] = postedTime.strip()
                 
 				# 再生回数
-				plays = sound.find("li", class_="sc-ministats-item").get("title")
-				#print(str(plays))
-				sound_in["plays"] = plays
+				if sound.find("li", class_="sc-ministats-item"):
+					plays = sound.find("li", class_="sc-ministats-item").get("title")
+
+					sound_in["plays"] = plays
+				else:
+					sound_in["plays"] = u"0 plays"
 
 				# サウンドのイメージ
 				imagetag = sound.find("span",class_="image__full").get("style")
 				image = imagetag[imagetag.find("url(")+4:imagetag.find(");")]
 				sound_in["image"] = image
                 
-				data_list.append(sound_in) # data_listに1ページ分の内容をまとめる
+				# data_list =sound_in # data_listに1ページ分の内容をまとめる
+				data_list.append(sound_in)
+				# f.write(str(sound_in))
 
 			return data_list
 
