@@ -22,6 +22,7 @@ def bottomScroll(driver, scrollpage):
 				lenOfPage = driver.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
 				if lastCount==lenOfPage:
 					match=True
+					print(u"here last page")
             
 			print(u"end execute / "+datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 			data = driver.page_source.encode('utf-8')
@@ -35,7 +36,7 @@ def bottomScroll(driver, scrollpage):
                 
 				# サウンドの投稿者の名前を入手
 				name = sound.find("span",class_="soundTitle__usernameText").text
-				#print(str(name))
+				# print(str(name))
 				sound_in["name"] = name.strip() # strip()は両端の空白と改行をなくしてくれる
                 
 				# サウンドのタイトルを入手
