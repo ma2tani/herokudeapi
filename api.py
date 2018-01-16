@@ -32,39 +32,26 @@ def index():
 @app.route('/api/<int:page>/<string:artist>/<string:sect>')
 def sound(page, artist, sect):
 
-    # driver = webdriver.PhantomJS() # PhantomJSを使う
     options = webdriver.ChromeOptions()
-    # 必須
     options.add_argument('--headless')
-    # options.add_argument('--disable-gpu')
-    # エラーの許容
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--allow-running-insecure-content')
     options.add_argument('--disable-web-security')
-    # headlessでは不要そうな機能
     options.add_argument('--disable-desktop-notifications')
     options.add_argument("--disable-extensions")
 
     # 言語
     options.add_argument('--lang=ja')
-    # 画像を読み込まないで軽くする
+    # 画像を読み込まない
     options.add_argument('--blink-settings=imagesEnabled=false')
 
-    # options.add_argument('remote-debugging-port=9222')
-    # options.add_argument('disable-gpu')
-    # options.add_argument('--no-sandbox')
     driver = webdriver.Chrome(
         '/usr/local/bin/chromedriver', chrome_options=options)
 
-    #driver = webdriver()
-    #exec(setparam.get('settings', 'set_driver'), globals(), driver)
-    # driver.set_window_size(int(setparam.get('settings', 'window_w')), int(setparam.get('settings', 'window_h'))) # PhantomJSのサイズを指定する
-    # 指定した要素などがなかった場合出てくるまでdriverが最大20秒まで自動待機してくれる
     driver.implicitly_wait(int(setparam.get('settings', 'driver_wait')))
 
     URL = "https://soundcloud.com/" + str(artist) + "/" + str(sect)
     driver.get(URL)  # URLにアクセスする
-    # driver.get(setparam.get('settings', 'URL')+str(artist)+str(sect)) # のURLにアクセスする
 
     data_list = []  # 全ページのデータを集める配列
     data_list = (bosc.bottomScroll(driver, page))
@@ -76,6 +63,6 @@ def sound(page, artist, sect):
     return jsonstring
 
 
-# bashで叩いたかimportで入れたかを判定する
+# shで叩いたかimportで入れたかを判定する
 if __name__ == '__main__':
     app.run()

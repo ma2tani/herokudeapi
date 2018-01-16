@@ -26,7 +26,7 @@ def bottomScroll(driver, scrollpage):
             
 			print(u"end execute / "+datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 			data = driver.page_source.encode('utf-8')
-			soup = BeautifulSoup(data,"lxml") # 加工しやすいようにlxml形式にする
+			soup = BeautifulSoup(data,"lxml") # lxml形式にする
 			sound_list = soup.find_all("li",class_="soundList__item") # サウンド単位で抽出
 			print(str(len(sound_list)) + u"件")
 			print(u"start parse / "+datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
@@ -37,18 +37,15 @@ def bottomScroll(driver, scrollpage):
 				# サウンドの投稿者の名前を入手
 				name = sound.find("span",class_="soundTitle__usernameText").text
 				# print(str(name))
-				sound_in["name"] = name.strip() # strip()は両端の空白と改行をなくしてくれる
+				sound_in["name"] = name.strip()
                 
 				# サウンドのタイトルを入手
 				title = sound.find("a",class_="soundTitle__title").find("span").text
-				#title = titles.find("span").text_content()
 				#print(str(title).encode('utf-8'))
-				# 指定したタグ&クラス内のtitleを出す
 				sound_in["title"] = title.strip()
                 
 				# サウンドのリンクを入手
 				link = sound.find("a",class_="soundTitle__title").get("href")
-				# 指定したタグ&クラス内のhrefを出す
 				#print(str(link))
 				sound_in["link"] = "https://soundcloud.com" + link
                 
@@ -75,7 +72,7 @@ def bottomScroll(driver, scrollpage):
 				image = imagetag[imagetag.find("url(")+4:imagetag.find(");")]
 				sound_in["image"] = image
                 
-				# data_list =sound_in # data_listに1ページ分の内容をまとめる
+				# data_listに1ページ分の内容をまとめる
 				data_list.append(sound_in)
 				# f.write(str(sound_in))
 
