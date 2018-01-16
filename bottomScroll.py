@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# ここからスクレイピング必要分
 from bs4 import BeautifulSoup
-# ここからseleniumでブラウザ操作必要分
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys # 文字を入力する時に使う
+from selenium.webdriver.common.keys import Keys
 from time import sleep
 import json
 from datetime import datetime
