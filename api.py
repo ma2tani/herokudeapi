@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import json
-# ここからスクレイピング必要分
 from bs4 import BeautifulSoup
-# ここからseleniumでブラウザ操作必要分
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys  # 文字を入力する時に使う
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import bottomScroll as bosc
 
-# ここからflaskの必要分
 import os
 from flask import Flask
 
@@ -17,7 +14,6 @@ import configparser
 setparam = configparser.SafeConfigParser()
 setparam.read(os.path.abspath(os.path.dirname(__file__)) + '/socl_settings.py')
 
-# ここからflaskでcorsの設定 ajaxを使う時のクロスドメイン制約用
 from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 CORS(app)
@@ -25,7 +21,7 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return "使い方 : /api/ページ数/アーティスト名/セクション"
+    return "使い方 : /api/pageNo/ArtistName/section"
 
 
 # ページ数/アーティスト/検索場所をパスから変数に受け取る
@@ -56,7 +52,7 @@ def sound(page, artist, sect):
     data_list = []  # 全ページのデータを集める配列
     data_list = (bosc.bottomScroll(driver, page))
 
-    driver.close()  # ブラウザ操作を終わらせる
+    driver.close()
     driver.quit()
     jsonstring = json.dumps(data_list, ensure_ascii=False, indent=int(
         setparam.get('settings', 'json_indent')))  # 作った配列をjson形式にして出力する
