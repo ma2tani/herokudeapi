@@ -1,12 +1,12 @@
 # socl-tracks-api
 https://herokusocl.herokuapp.com/
 
-Get data list of sound cloud artist
-```{DEPLOY_URL}/scrollPageNo/artistName/section```
+Get data list of SoundCloud artist
+```{DEPLOY_URL}/api/scrollPageNo/artistName/section```
 
 ## Example
-```{DEPLOY_URL}/0/artistName/tracks```
-scrollPageNo=0 get all tracks
+```{DEPLOY_URL}/api/0/artistName/tracks```
+scrollPageNo=0 get all tracks of artist
 
 ## Heroku env
 ```
