@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import bottomScroll as bosc
+import soclParseJson as spj
 
 import os
 from flask import Flask
@@ -30,7 +31,7 @@ def sound(page, artist, sect):
 
     options = webdriver.ChromeOptions()
     
-    # **** Heroku env ****
+    # **** Heroku env only ****
     options.binary_location = '/app/.apt/usr/bin/google-chrome'
     
     options.add_argument('--headless')
@@ -45,12 +46,10 @@ def sound(page, artist, sect):
     # 画像を読み込まない
     options.add_argument('--blink-settings=imagesEnabled=false')
 
-    # **** Local env ****
-    # driver = webdriver.Chrome(
-    #     '/usr/local/bin/chromedriver', chrome_options=options)
-    
-    # **** Heroku env ****
-    driver = webdriver.Chrome(chrome_options=options)
+    driver = webdriver.Chrome(
+    # **** Local env only ****
+    # '/usr/local/bin/chromedriver', 
+    chrome_options=options)
     
 
     driver.implicitly_wait(int(setparam.get('settings', 'driver_wait')))
