@@ -31,12 +31,8 @@ edit api.py
     # **** Heroku env ****
     #options.binary_location = '/app/.apt/usr/bin/google-chrome'
     
-    # **** Local env ****
-    driver = webdriver.Chrome(
-        '/usr/local/bin/chromedriver', chrome_options=options)
-        
-    # **** Heroku env ****
-    driver = webdriver.Chrome(chrome_options=options)
+    # **** Local env only ****
+    '/usr/local/bin/chromedriver', 
 ```
 
 local running
