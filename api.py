@@ -22,7 +22,7 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return "使い方 : /api/pageNo/ArtistName/section"
+    return "Use : /api/ScrollPageNo/ArtistName/section"
 
 
 # ページ数/アーティスト/検索場所をパスから変数に受け取る
