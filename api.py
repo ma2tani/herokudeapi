@@ -29,6 +29,10 @@ def index():
 def sound(page, artist, sect):
 
     options = webdriver.ChromeOptions()
+    
+    # **** Heroku env ****
+    options.binary_location = '/app/.apt/usr/bin/google-chrome'
+    
     options.add_argument('--headless')
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--allow-running-insecure-content')
@@ -41,8 +45,13 @@ def sound(page, artist, sect):
     # 画像を読み込まない
     options.add_argument('--blink-settings=imagesEnabled=false')
 
-    driver = webdriver.Chrome(
-        '/usr/local/bin/chromedriver', chrome_options=options)
+    # **** Local env ****
+    # driver = webdriver.Chrome(
+    #     '/usr/local/bin/chromedriver', chrome_options=options)
+    
+    # **** Heroku env ****
+    driver = webdriver.Chrome(chrome_options=options)
+    
 
     driver.implicitly_wait(int(setparam.get('settings', 'driver_wait')))
 
